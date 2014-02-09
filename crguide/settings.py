@@ -11,8 +11,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.dummy', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'mongodb',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -119,28 +119,6 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-INSTALLED_APPS = (
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-####THIRD PARTY APPS################
-    'gunicorn',
-    'mongoengine.django.mongo_auth',
-####END THIRD PARTY APPS#############
-
-####LOCAL APPS########
-    'offices',
-    'mongonaut',
-    
-####END LOCAL APPS########
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
-)
 
 #####MONGO ENGINE CONFIG#####
 AUTHENTICATION_BACKENDS = (
@@ -156,6 +134,29 @@ MONGONAUT_TWITTER_BOOTSTRAP_ALERT = "http://netdna.bootstrapcdn.com/bootstrap/3.
 
 ####END CONFIG####
 
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+####THIRD PARTY APPS################
+    'gunicorn',
+    'mongoengine.django.mongo_auth',
+    'mongonaut',
+####END THIRD PARTY APPS#############
+
+####LOCAL APPS########
+    'offices',
+
+
+####END LOCAL APPS########
+    # Uncomment the next line to enable the admin:
+    'django.contrib.admin',
+    # Uncomment the next line to enable admin documentation:
+    'django.contrib.admindocs',
+)
 ####MONGOLAB CONNECTION####
 from mongoengine import connect
 MONGO_DATABASE_NAME =  'heroku_app22051739'
