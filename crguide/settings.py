@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 ####THIRD PARTY APPS################
     'gunicorn',
+    'mongoengine.django.mongo_auth',
 ####END THIRD PARTY APPS#############
 
 ####LOCAL APPS########
@@ -140,7 +141,9 @@ INSTALLED_APPS = (
 )
 
 #####MONGO ENGINE CONFIG#####
-
+AUTHENTICATION_BACKENDS = (
+            'mongoengine.django.auth.MongoEngineBackend',
+            )
 AUTH_USER_MODEL = 'mongo_auth.MongoUser'
 MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
 SESSION_ENGINE = 'mongoengine.django.sessions'
