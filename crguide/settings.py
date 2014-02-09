@@ -154,7 +154,7 @@ SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
 ####MONGOLAB CONNECTION####
 from mongoengine import connect
 MONGO_DATABASE_NAME =  'heroku_app22051739'
-connect(MONGO_DATABASE_NAME, host="mongodb://crguide:java1432@ds027789.mongolab.com:27789/heroku_app22051739")
+connect(MONGO_DATABASE_NAME, host="mongodb://sreeram:java1432@ds027789.mongolab.com:27789/heroku_app22051739")
 ####END MONGOLAB CONFIG####
 
 # A sample logging configuration. The only tangible logging
