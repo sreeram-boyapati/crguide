@@ -133,6 +133,8 @@ INSTALLED_APPS = (
 
 ####LOCAL APPS########
     'offices',
+    'mongonaut',
+    
 ####END LOCAL APPS########
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
@@ -148,6 +150,9 @@ AUTH_USER_MODEL = 'mongo_auth.MongoUser'
 MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
 SESSION_ENGINE = 'mongoengine.django.sessions'
 SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
+MONGONAUT_JQUERY = "http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+MONGONAUT_TWITTER_BOOTSTRAP = "http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
+MONGONAUT_TWITTER_BOOTSTRAP_ALERT = "http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"
 
 ####END CONFIG####
 
