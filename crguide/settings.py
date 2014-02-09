@@ -75,7 +75,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-        os.path.join(BASE_DIR, 'static'),
+
     )
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -130,14 +130,29 @@ INSTALLED_APPS = (
     'gunicorn',
 ####END THIRD PARTY APPS#############
 
+####LOCAL APPS########
+    'offices',
+####END LOCAL APPS########
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
 
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+#####MONGO ENGINE CONFIG#####
 
+AUTH_USER_MODEL = 'mongo_auth.MongoUser'
+MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
+SESSION_ENGINE = 'mongoengine.django.sessions'
+SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
+
+####END CONFIG####
+
+####MONGOLAB CONNECTION####
+from mongoengine import connect
+MONGO_DATABASE_NAME =  'mongodb://crguide:java1432@ds027789.mongolab.com:27789/heroku_app22051739'
+connect(MONGO_DATABASE_NAME)
+####END MONGOLAB CONFIG####
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
