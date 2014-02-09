@@ -11,7 +11,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.dummy', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': '',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
@@ -153,9 +153,10 @@ SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
 
 ####MONGOLAB CONNECTION####
 from mongoengine import connect
-MONGO_DATABASE_NAME =  'mongodb://crguide:java1432@ds027789.mongolab.com:27789/heroku_app22051739'
-connect(MONGO_DATABASE_NAME)
+MONGO_DATABASE_NAME =  'heroku_app22051739'
+connect(MONGO_DATABASE_NAME, host=" mongodb://crguide:java1432@ds027789.mongolab.com:27789/heroku_app22051739")
 ####END MONGOLAB CONFIG####
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
