@@ -145,8 +145,7 @@ INSTALLED_APPS = (
     'gunicorn',
 ####END THIRD PARTY APPS#############
 
-####LOCAL APPS########
-    '',
+####LOCAL APPS#######
 
 
 ####END LOCAL APPS########
