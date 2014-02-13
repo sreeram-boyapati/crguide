@@ -11,11 +11,11 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'mongodb',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'heroku_559c8bf72d89f3b ',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
+        'USER': 'b957d1fe402877',
+        'PASSWORD': 'd5f0d9f0',
         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
@@ -143,12 +143,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 ####THIRD PARTY APPS################
     'gunicorn',
-    'mongoengine.django.mongo_auth',
-    'mongonaut',
 ####END THIRD PARTY APPS#############
 
 ####LOCAL APPS########
-    'offices',
+    '',
 
 
 ####END LOCAL APPS########
@@ -157,11 +155,6 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
 )
-####MONGOLAB CONNECTION####
-from mongoengine import connect
-MONGO_DATABASE_NAME =  'heroku_app22051739'
-connect(MONGO_DATABASE_NAME, host="mongodb://sreeram:java1432@ds027789.mongolab.com:27789/heroku_app22051739")
-####END MONGOLAB CONFIG####
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
