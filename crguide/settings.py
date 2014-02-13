@@ -119,19 +119,7 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
 )
 
-
-#####MONGO ENGINE CONFIG#####
-AUTHENTICATION_BACKENDS = (
-            'mongoengine.django.auth.MongoEngineBackend',
-            )
-AUTH_USER_MODEL = 'mongo_auth.MongoUser'
-MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
-SESSION_ENGINE = 'mongoengine.django.sessions'
-SESSION_SERIALIZER = 'mongoengine.django.sessions.BSONSerializer'
-MONGONAUT_JQUERY = "http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
-MONGONAUT_TWITTER_BOOTSTRAP = "http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css"
-MONGONAUT_TWITTER_BOOTSTRAP_ALERT = "http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"
-
+ESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
 ####END CONFIG####
 
 INSTALLED_APPS = (
