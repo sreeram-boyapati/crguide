@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block extra_css%}
+<style></style>
+{% endblock %}
+{% block content %}
+<form method="POST" action="{% url 'add_question' %}"> 
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Add Question"/>
+</form>
+</body>
+{% endblock %}
+{% block extra_js %}
+<script type="text/javascript"></script>
+{% endblock %}
+
