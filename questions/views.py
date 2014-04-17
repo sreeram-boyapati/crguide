@@ -1,6 +1,7 @@
 # Create your views here.
 from django.views.generic.edit import CreateView
-from django.views.generic import ListView
+from django.views.generic import ListView, View
+from django.shortcuts import render
 from .forms import AddQuestionForm, AddAnswerForm
 from .models import Question, Answer
 from django.http.response import HttpResponse
@@ -51,6 +52,22 @@ class ListQuestionsView(AjaxResponseMixin, JSONResponseMixin, ListView):
 
     def get_ajax(self, *args, **kargs):
         qset = self.get_queryset()
-        json_dict = list(qset.values('question', 'category', 'asked_by'))
+        json_dict = list(qset.values('id', 'question', 'category', 'asked_by'))
         return self.render_json_response(json_dict)
+
+class QuestionView(View):
+
+    def get_answer_set(self, question):
+        return Answer.objects.filter(answer_to = question)
+
+    #Give the question and its respective answers.
+    def get(self, request, *args, **kwargs):
+        question_id = request.GET['question_id']
+        question = Question.objects.get(id=question_id)
+        answers = self.get_answer_set(question)
+        print answers
+        context = {'questionObj' : question, 'answersObj': answers}
+        return render(request, 'questionview.html', context)
+
+    
 

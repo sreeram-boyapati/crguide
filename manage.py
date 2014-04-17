@@ -5,6 +5,8 @@ if __name__ == "__main__":
 	try:
 		if os.environ['SETTINGS'] == 'Production':
 			os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crguide.settings.production")
+		else:
+			os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crguide.settings.local")
 	except Exception:
 		os.environ.setdefault("DJANGO_SETTINGS_MODULE", "crguide.settings.local")
 
