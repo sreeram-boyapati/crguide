@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block extra_css%}
+<style></style>
+{% endblock %}
+{% block content %}
+	<ul>
+	{% for questionObj in questions %}
+	<li>
+	<div class="questionItem">
+		<span class = "questionHeader">{{ questionObj.question }}</span><br/>
+		<span class = "text"> {{ questionObj.asked_by }}</span><br/>
+		<span class = "text"> {{ questionObj.category.title }}</span><br/>
+	</div>
+	</li>
+	{% endfor %}
+	</ul>
+{% endblock %}
+{% block extra_js %}
+<script type="text/javascript"></script>
+{% endblock %}
+
