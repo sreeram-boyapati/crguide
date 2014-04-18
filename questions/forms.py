@@ -1,6 +1,7 @@
 from django import forms
 from .models import Question, Answer
 from django.contrib.auth.models import User
+from django.forms.widgets import TextInput,Textarea
 from offices.models import Office
 
 class AddQuestionForm(forms.ModelForm):
@@ -15,11 +16,16 @@ class AddQuestionForm(forms.ModelForm):
 class AddAnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
+        fields = ('answer', )
+        #widgets = {
+#            'answer': Textarea(attrs={'cols': 80, 'rows': 20, }),
+#        }
 
     def __init__(self, *args, **kwargs):
-        question = kwargs.pop('question', '')
         super(AddAnswerForm, self).__init__(*args, **kwargs)
-        self.fields['question'] = question
+
+class AddAnswerForm(forms.Form):
+    answer = forms.CharField(max_length=250)
 
 class EditQuestionForm(forms.ModelForm):
     class Meta:

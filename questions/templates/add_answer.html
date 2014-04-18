@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block extra_css%}
+<style></style>
+{% endblock %}
+{% block content %}
+<h4>{{ questionObj.question }}</h4>
+<form method="POST" action="{% url 'add_answer' %}"> 
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Add Answer"/>
+</form>
+</body>
+{% endblock %}
+{% block extra_js %}
+<script type="text/javascript"></script>
+{% endblock %}
+

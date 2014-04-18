@@ -4,9 +4,8 @@ from django.views.generic import ListView, View
 from django.shortcuts import render
 from .forms import AddQuestionForm, AddAnswerForm
 from .models import Question, Answer
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, HttpResponseRedirect
 from braces.views import LoginRequiredMixin, AjaxResponseMixin, JSONResponseMixin
-
 
 
 class AddQuestionView(LoginRequiredMixin, CreateView):
@@ -27,18 +26,38 @@ class AddQuestionView(LoginRequiredMixin, CreateView):
 #    	kwargs['asked_by'] = self.request.user
 
 
-class AddAnswerView(LoginRequiredMixin, CreateView):
+class AddAnswerView(LoginRequiredMixin, View):
     model = Answer
     form_class = AddAnswerForm
 
-    def form_valid(self, form):
-        form.instance.answered_by = self.request.user
-        form.save()
-        return HttpResponse('Answer is added')
+    def get(self, request, *args, **kwargs):
+        question_id = request.GET['question_id']
+        questionObj = Question.objects.get(id=question_id)
+        query = questionObj.question
+        self.request.session['question']=questionObj
+        form = AddAnswerForm()
+        ctx = {'form': form, 'questionObj': questionObj}
+        return render(request, 'add_answer.html', ctx)
 
-    def form_invalid(self, form):
-        print form.errors
-        return HttpResponse('Answer is invalid')
+    def post(self, request, *args, **kwargs):
+        form = AddAnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.cleaned_data['answer']
+            questionObj = self.request.session['question']
+            del self.request.session['question']
+            answerObj = Answer(answer_to=questionObj, answered_by=self.request.user, answer=answer)
+            answerObj.save()
+            return HttpResponse('answer is valid')
+        else:
+            return HttpResponse('answer is invalid')
+
+
+
+#    def get_form_kwargs(self):
+#        kwargs = super(AddAnswerView, self).get_form_kwargs()
+#        kwargs['answer_to'] = self.question_name
+#        return kwargs
+
 
 class ListQuestionsView(AjaxResponseMixin, JSONResponseMixin, ListView):
     template_name='ListQuestions.html'
