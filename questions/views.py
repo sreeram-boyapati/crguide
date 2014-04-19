@@ -21,46 +21,35 @@ class AddQuestionView(LoginRequiredMixin, CreateView):
     def form_invalid(self, form):
     	return HttpResponse('Question format is invalid')
 
-#    def get_form_kwargs(self):
-#    	kwargs = super(AddQuestionView, self).get_form_kwargs()
-#    	kwargs['asked_by'] = self.request.user
-
-
-class AddAnswerView(LoginRequiredMixin, View):
+class AddAnswerView(LoginRequiredMixin, CreateView):
     model = Answer
+    template_name = 'add_answer.html'
     form_class = AddAnswerForm
+    content_type="text/html"
 
-    def get(self, request, *args, **kwargs):
-        question_id = request.GET['question_id']
-        questionObj = Question.objects.get(id=question_id)
-        query = questionObj.question
-        self.request.session['question']=questionObj
-        form = AddAnswerForm()
-        ctx = {'form': form, 'questionObj': questionObj}
-        return render(request, 'add_answer.html', ctx)
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == 'GET':
+            question_id = request.GET['question_id']
+            questionObj = Question.objects.get(id=question_id)
+            self.request.session['questionObj'] = questionObj.question
+            self.request.session['question_id'] = question_id
+        return super(AddAnswerView, self).dispatch(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        form = AddAnswerForm(request.POST)
-        if form.is_valid():
-            answer = form.cleaned_data['answer']
-            questionObj = self.request.session['question']
-            del self.request.session['question']
-            answerObj = Answer(answer_to=questionObj, answered_by=self.request.user, answer=answer)
-            answerObj.save()
-            return HttpResponse('answer is valid')
-        else:
-            return HttpResponse('answer is invalid')
+    def form_valid(self, form):
+        question = Question.objects.get(id=self.request.session['question_id'])
+        form.instance.answer_to = question
+        form.instance.answered_by = self.request.user
+        form.save()
+        del self.request.session['question_id']
+        del self.request.session['questionObj']
+        return HttpResponse('Answer is added')
 
-
-
-#    def get_form_kwargs(self):
-#        kwargs = super(AddAnswerView, self).get_form_kwargs()
-#        kwargs['answer_to'] = self.question_name
-#        return kwargs
+    def form_invalid(self, form):
+        return HttpResponse('Answer is invalid')
 
 
 class ListQuestionsView(AjaxResponseMixin, JSONResponseMixin, ListView):
-    template_name='ListQuestions.html'
+    template_name='list_questions.html'
     paginate_by = '9'
 
     def get_object(self):
@@ -73,6 +62,12 @@ class ListQuestionsView(AjaxResponseMixin, JSONResponseMixin, ListView):
         qset = self.get_queryset()
         json_dict = list(qset.values('id', 'question', 'category', 'asked_by'))
         return self.render_json_response(json_dict)
+
+    def get_context_data(self, **kwargs):
+        qset = self.get_queryset()
+        ctx = super(ListQuestionsView).get_context_data(self, **kwargs)
+        ctx['questions']=qset
+        return ctx
 
 class QuestionView(View):
 

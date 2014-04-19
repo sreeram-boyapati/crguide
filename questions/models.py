@@ -17,3 +17,6 @@ class Answer(models.Model):
     answer_to = models.ForeignKey(Question)
     answered_by = models.ForeignKey(User)
     answer = models.CharField(max_length = 250)
+
+    def __unicode__(self):
+    	return self.answer_to.question + " | " + self.answered_by.username
