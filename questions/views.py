@@ -1,6 +1,7 @@
 # Create your views here.
 from django.views.generic.edit import CreateView
-from django.views.generic import ListView, View
+
+from django.views.generic import ListView, View, UpdateView
 from django.shortcuts import render
 from .forms import AddQuestionForm, AddAnswerForm
 from .models import Question, Answer
@@ -84,4 +85,11 @@ class QuestionView(View):
         return render(request, 'questionview.html', context)
 
     
+class EditQuestionView(LoginRequiredMixin, UpdateView):
+    template_name='add_question.html'
+    model = Question
+    form_class = AddQuestionForm
+    success_url = '/listquestions'
 
+    def get_object(self):
+        return Question.objects.get(id=self.kwargs['id'])

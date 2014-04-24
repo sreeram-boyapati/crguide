@@ -21,7 +21,6 @@ docs/_build
 
 # generated static files:
 assets
-static
 venv
 
 #New Relic Ini Config Details
